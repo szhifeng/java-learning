@@ -1,0 +1,11 @@
+server:
+  ## ????
+  port: 8089
+  tomcat.uri-encoding: UTF-8
+
+## netty ???????
+device:
+  http:
+    port: 7556
+  socket:
+    port: 1001
