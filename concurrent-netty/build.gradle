@@ -1,0 +1,16 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.netty:netty-all'
+    compileClasspath 'org.springframework.boot:spring-boot-starter'
+}
+
+bootJar{
+    enabled = false
+}
+
+jar{
+    enabled = true
+}

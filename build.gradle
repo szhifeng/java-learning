@@ -28,7 +28,6 @@ subprojects {
 	apply plugin: 'java-library'
 
 	dependencies {
-		api platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
 		// 相当于provided scope，不打到构建产物中
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
@@ -36,7 +35,7 @@ subprojects {
 		testAnnotationProcessor 'org.projectlombok:lombok'
 
 		// 相当于test scope，仅在单元测试使用
-		testImplementation 'org.testng:testng'
+		testImplementation 'org.testng:testng:6.14.2'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 		// 在allprojects下只要声明lombok，junit/testng这类通用依赖
