@@ -1,3 +1,4 @@
 rootProject.name = 'concurrent'
 
+include 'concurrent-netty'
 include 'concurrent-api'
