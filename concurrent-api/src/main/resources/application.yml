@@ -1,9 +1,9 @@
 server:
-  ## ????
+  ## 服务启动端口
   port: 8089
   tomcat.uri-encoding: UTF-8
 
-## netty ???????
+## netty 服务端端口设置
 device:
   http:
     port: 7556

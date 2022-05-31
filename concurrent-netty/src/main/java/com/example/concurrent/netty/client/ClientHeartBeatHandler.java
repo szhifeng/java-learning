@@ -1,4 +1,4 @@
-package com.example.concurrent.netty.service;
+package com.example.concurrent.netty.client;
 
 import com.example.concurrent.netty.utils.NettyUtils;
 import io.netty.buffer.ByteBuf;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author szf
- * @describe: 协议数据处理
+ * @describe: 客户端协议数据处理
  * @Date 2022/5/27 14:55
  */
 @Slf4j
 @Service
 @ChannelHandler.Sharable
-public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
+public class ClientHeartBeatHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 接收报文
@@ -27,8 +27,6 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf byteBuf = (ByteBuf) msg;
         int len = byteBuf.readableBytes();
-        log.info("---------------start process msg--------------------");
-        log.info("readable bytes is:" + len);
         byte[] old = new byte[len];
         for (int i = 0; i < len; i++) {
             old[i] = byteBuf.readByte();
@@ -36,16 +34,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
         String message = NettyUtils.bytesToHexString(old);
         log.info(String.format("message:%s", message));
         //相关处理
-    }
-
-    /**
-     * 接收到客户端信息完成
-     */
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-        log.info("接收到客户端信息完成");
-        //ctx.flush();
-        ctx.writeAndFlush(Unpooled.copiedBuffer("服务端已收到消息，并返回友好的问候！", CharsetUtil.UTF_8));
+        System.out.println("收到服务端" + message + "的消息：" + byteBuf.toString(CharsetUtil.UTF_8));
     }
 
     /**
@@ -65,6 +54,8 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("CLIENT" + getRemoteAddress(ctx) + " 接入连接");
+        //发送消息到服务端
+        ctx.writeAndFlush(Unpooled.copiedBuffer("客户端发起请求，over！", CharsetUtil.UTF_8));
     }
 
     /**
