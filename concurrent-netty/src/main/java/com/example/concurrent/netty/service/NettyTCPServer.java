@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * netty 中 channel 通道的类型：
@@ -33,7 +31,6 @@ import java.util.Map;
  * @author szf
  * @describe: netty 服务
  * @Date 2022/5/27 14:44
- *
  */
 @Slf4j
 @Service

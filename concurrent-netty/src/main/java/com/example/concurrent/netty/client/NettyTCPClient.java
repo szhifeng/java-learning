@@ -44,7 +44,7 @@ public class NettyTCPClient {
     /**
      * 启动并绑定 端口
      */
-    public void bind(String inetHost, int tcp, int socket) throws Exception {
+    public void bindTCP(String inetHost, int tcp) throws Exception {
         //创建 异步的客户端 TCP Socket 客户端的启动对象，设置参数
         Bootstrap TCPBootstrap = new Bootstrap();
         TCPBootstrap.group(bossGroup)
@@ -59,8 +59,23 @@ public class NettyTCPClient {
                         ch.pipeline().addLast(new ClientHeartBeatHandler());
                     }
                 });
-
         //绑定监听端口，调用sync同步阻塞方法等待绑定操作完成，完成后返回ChannelFuture类似于JDK中Future
+        ChannelFuture futureDevice = TCPBootstrap.connect(inetHost, tcp).sync();
+        if (futureDevice.isSuccess()) {
+            log.info("TCP 客户端启动成功");
+        } else {
+            log.info("TCP 客户端启动失败");
+            futureDevice.cause().printStackTrace();
+            bossGroup.shutdownGracefully(); //关闭线程组
+        }
+        //成功绑定到端口之后,给channel增加一个 管道关闭的监听器并同步阻塞,直到channel关闭,线程才会往下执行,结束进程。
+        futureDevice.channel().closeFuture().sync();
+    }
+
+    /**
+     * 启动并绑定 端口
+     */
+    public void bindWebSocket(String inetHost, int socket) throws Exception {
         Bootstrap webBootstrap = new Bootstrap();
         webBootstrap.group(bossGroup)
                 //设置客户端通道实现类型(异步的服务器端 TCP Socket 连接)
@@ -79,15 +94,7 @@ public class NettyTCPClient {
                     }
                 });
         //绑定监听端口，调用sync同步阻塞方法等待绑定操作完成，完成后返回ChannelFuture类似于JDK中Future
-        ChannelFuture futureDevice = TCPBootstrap.connect(inetHost, tcp).sync();
         ChannelFuture futureWebSocket = webBootstrap.connect(inetHost, socket).sync();
-        if (futureDevice.isSuccess()) {
-            log.info("TCP 客户端启动成功");
-        } else {
-            log.info("TCP 客户端启动失败");
-            futureDevice.cause().printStackTrace();
-            bossGroup.shutdownGracefully(); //关闭线程组
-        }
         if (futureWebSocket.isSuccess()) {
             log.info("WEB-SOCKET客户端启动成功");
         } else {
@@ -96,7 +103,6 @@ public class NettyTCPClient {
             bossGroup.shutdownGracefully(); //关闭线程组
         }
         //成功绑定到端口之后,给channel增加一个 管道关闭的监听器并同步阻塞,直到channel关闭,线程才会往下执行,结束进程。
-        futureDevice.channel().closeFuture().sync();
         futureWebSocket.channel().closeFuture().sync();
     }
 
