@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class NettyCore {
+public class NettyServiceCore {
 
     @Resource
     private NettyTCPServer nettyTCPServer;

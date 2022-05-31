@@ -42,6 +42,7 @@ public class NettyTCPServer {
     private EventLoopGroup workerGroup = null;
 
     public NettyTCPServer() {
+        //创建两个线程组 boosGroup、workerGroup
         this.bossGroup = new NioEventLoopGroup(1);
         this.workerGroup = new NioEventLoopGroup();
     }
@@ -50,22 +51,28 @@ public class NettyTCPServer {
      * 启动并绑定 端口
      */
     public void bind(int tcp, int socket) throws Exception {
+        //创建 异步的服务器端 TCP Socket 服务端的启动对象，设置参数
         ServerBootstrap device = new ServerBootstrap();
+        //设置两个线程组boosGroup和workerGroup
         device.group(bossGroup, workerGroup)
+                //设置服务端通道实现类型(异步的服务器端 TCP Socket 连接)
                 .channel(NioServerSocketChannel.class)
                 //初始化服务端可连接队列,指定了队列的大小128
                 .option(ChannelOption.SO_BACKLOG, 1024)
-                //保持长连接
+                //设置保持活动连接状态
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
+                //设置缓存大小
                 .childOption(ChannelOption.RCVBUF_ALLOCATOR, new FixedRecvByteBufAllocator(65535))
+                //设置是否延迟
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .childOption(ChannelOption.SO_REUSEADDR, true)
-                // 绑定客户端连接时候触发操作
+                // 使用匿名内部类的形式初始化通道对象，设置绑定客户端连接时候触发操作
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel sh) {
                         InetSocketAddress address = sh.remoteAddress();
                         log.info("TCP 客户端IP:" + address.getAddress() + ":" + address.getPort());
+                        //给pipeline管道设置 处理器（业务操作在此处理）
                         sh.pipeline()
                                 .addLast(new FixedLengthFrameDecoder(10))
                                 .addLast("HeartBeat", new HeartBeatHandler());
@@ -133,66 +140,5 @@ public class NettyTCPServer {
             workerGroup.shutdownGracefully();
             workerGroup = null;
         }
-    }
-
-    /**
-     * 十六进制数值 转十六进制字符串
-     *
-     * @param bytes byte数组
-     * @return
-     */
-    public static String bytesToHexString(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte aByte : bytes) {
-            String hex = Integer.toHexString(0xFF & aByte);
-            if (hex.length() == 1) {
-                sb.append('0');
-            }
-            sb.append(hex);
-        }
-        return sb.toString().toUpperCase();
-    }
-
-    /**
-     * 十六进制转换为十进制
-     *
-     * @param content
-     * @return
-     */
-    public static int covert(String content) {
-        int number = 0;
-        String[] HighLetter = {"A", "B", "C", "D", "E", "F"};
-        Map<String, Integer> map = new HashMap<>();
-        for (int i = 0; i <= 9; i++) {
-            map.put(i + "", i);
-        }
-        for (int j = 10; j < HighLetter.length + 10; j++) {
-            map.put(HighLetter[j - 10], j);
-        }
-        String[] str = new String[content.length()];
-        for (int i = 0; i < str.length; i++) {
-            str[i] = content.substring(i, i + 1);
-        }
-        for (int i = 0; i < str.length; i++) {
-            number += map.get(str[i]) * Math.pow(16, str.length - 1 - i);
-        }
-        return number;
-    }
-
-    /**
-     * 十进制转换为ASCII码
-     *
-     * @param ascii
-     * @return
-     */
-    public static String dec2Str(String ascii) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < ascii.length() - 1; i += 2) {
-            String h = ascii.substring(i, (i + 2));
-            // 这里第二个参数传10表10进制
-            int decimal = Integer.parseInt(h, 10);
-            sb.append((char) decimal);
-        }
-        return sb.toString();
     }
 }
