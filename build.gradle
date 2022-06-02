@@ -30,6 +30,7 @@ subprojects {
 	dependencies {
 		// 相当于provided scope，不打到构建产物中
 		compileOnly 'org.projectlombok:lombok'
+		implementation 'com.google.guava:guava:23.0'
 		annotationProcessor 'org.projectlombok:lombok'
 		testCompileOnly 'org.projectlombok:lombok'
 		testAnnotationProcessor 'org.projectlombok:lombok'
