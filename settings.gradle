@@ -2,3 +2,4 @@ rootProject.name = 'concurrent'
 
 include 'concurrent-netty'
 include 'concurrent-api'
+include 'design-pattern'
