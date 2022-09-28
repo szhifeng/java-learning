@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class NettyClientTest {
     private final static int httpPort = 8070;
 
-//    @Test
+    @Test
     public void testPort() throws Exception {
         NettyTCPClient tcpClient = new NettyTCPClient();
         tcpClient.bindTCP("127.0.0.1", httpPort);

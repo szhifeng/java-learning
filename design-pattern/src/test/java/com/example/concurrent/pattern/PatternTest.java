@@ -14,7 +14,8 @@ import java.util.concurrent.Future;
 public class PatternTest {
 
     @Test
-    public void BehavioralObserverTest() {
+    public void behavioralObserverTest() {
+        
         DefaultObserved observed = new DefaultObserved();
         observed.addListener(new Observer<Future<? super Void>>() {
             @Override

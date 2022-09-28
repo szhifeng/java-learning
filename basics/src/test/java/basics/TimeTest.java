@@ -14,6 +14,7 @@ public class TimeTest {
 
     /**
      * Obtains the current instant from the system clock.
+     * @see java.time.Instant
      */
     @Test
     void instantTest(){
@@ -81,6 +82,10 @@ public class TimeTest {
         System.out.println("相同时刻：" + Clock.fixed(clock.instant(), clock.getZone()));
     }
 
+    /**
+     * A time-zone ID, such as Europe/Paris.
+     * @see java.time.ZoneId
+     */
     @Test
     void zonedTest() {
         // create TemporalAccessor object
