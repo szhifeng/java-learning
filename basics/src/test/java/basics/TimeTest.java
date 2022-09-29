@@ -3,6 +3,8 @@ package basics;
 import org.junit.jupiter.api.Test;
 
 import java.time.*;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalQuery;
 
 /**
  * @author szf
@@ -95,5 +97,20 @@ public class TimeTest {
         // print result
         System.out.println("Zone Id got from TemporalAccessor object：" + zoneddatetime + " is " + response);
         System.out.println(ZoneId.from(ZonedDateTime.now()));
+    }
+
+    /**
+     * Strategy for querying a temporal object.
+     * @see java.time.LocalDate#query(TemporalQuery)
+     */
+    @Test
+    void temporalQueryTest() {
+        TemporalQuery<String> remainDaysOfYear = temporal -> {
+            LocalDate d = LocalDate.from(temporal);
+            LocalDate lastDayOfYear = d.with(TemporalAdjusters.lastDayOfYear());
+            Period period = d.until(lastDayOfYear);
+            return period.getMonths() + "月" + period.getDays() + "天";
+        };
+        System.out.println("到年底还有多久:" + LocalDate.now().query(remainDaysOfYear));
     }
 }
