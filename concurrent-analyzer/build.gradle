@@ -1,0 +1,32 @@
+buildscript {
+    ext {
+        flinkVersion = '1.14.0'
+        scalaVersion = '2.11'
+        springBootVersion = '2.7.0'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.apache.flink:flink-core:$flinkVersion"
+    implementation "org.apache.flink:flink-java:$flinkVersion"
+    implementation "org.apache.flink:flink-clients_$scalaVersion:$flinkVersion"
+    implementation "org.apache.flink:flink-runtime-web_$scalaVersion:$flinkVersion"
+    implementation "org.apache.flink:flink-streaming-java_$scalaVersion:$flinkVersion"
+    implementation "org.apache.flink:flink-connector-kafka_$scalaVersion:$flinkVersion"
+    testImplementation("org.assertj:assertj-core")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.mockito:mockito-core")
+    testImplementation("org.mockito:mockito-junit-jupiter")
+}
+
+bootJar{
+    enabled = false
+}
+
+jar{
+    enabled = true
+}

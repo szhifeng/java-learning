@@ -1,8 +1,8 @@
 rootProject.name = 'concurrent'
 
+include 'basics'
 include 'concurrent-netty'
-include 'concurrent-lucene'
+include 'concurrent-analyzer'
 include 'concurrent-api'
 include 'design-pattern'
-include 'basics'
 
