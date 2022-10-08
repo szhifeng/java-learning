@@ -3,6 +3,7 @@ package basics;
 import org.junit.jupiter.api.Test;
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalQuery;
 
@@ -19,7 +20,7 @@ public class TimeTest {
      * @see java.time.Instant
      */
     @Test
-    void instantTest(){
+    void instantTest() {
         Instant now = Instant.now();
         long milli = now.toEpochMilli();
         System.out.println(milli);
@@ -41,7 +42,7 @@ public class TimeTest {
         LocalDate endTime = LocalDate.of(2022, 7, 1);
         Period period = Period.between(startTime, endTime);
         Period period2 = Period.between(endTime, startTime);
-        System.out.println(period.getYears() + "年==" +period.getMonths() + "月 ==" + period.getDays());
+        System.out.println(period.getYears() + "年==" +period.getMonths() + "月 ==" + period.getDays() + "天");
         System.out.println(period2.getDays());
     }
 
@@ -50,7 +51,7 @@ public class TimeTest {
      * This class models a quantity or amount of time in terms of seconds and nanoseconds. It can be accessed using other duration-based units,
      * such as minutes and hours. In addition, the DAYS unit can be used and is treated as exactly equal to 24 hours, thus ignoring daylight savings effects.
      * See Period for the date-based equivalent to this class.
-     * @see java.time.Duration
+      * @see java.time.Duration
      */
     @Test
     void durationTest() {
@@ -97,6 +98,25 @@ public class TimeTest {
         // print result
         System.out.println("Zone Id got from TemporalAccessor object：" + zoneddatetime + " is " + response);
         System.out.println(ZoneId.from(ZonedDateTime.now()));
+    }
+
+    /**
+     * A standard set of date periods units.
+     * @see java.time.temporal.ChronoUnit
+     */
+    @Test
+    void cronUnitTest() {
+        LocalDate today = LocalDate.now();
+        System.out.println("当前时间: " + today); //2021-12-02
+        //LocalDate plus(long amountToAdd, TemporalUnit unit)
+        LocalDate nextWeek = today.plus(1, ChronoUnit.WEEKS);
+        System.out.println("下周的时间: " + nextWeek); //2021-12-09
+        LocalDate nextMonth = today.plus(1, ChronoUnit.MONTHS);
+        System.out.println("下个月的时间: " + nextMonth); //2022-01-02
+        LocalDate nextYear = today.plus(1, ChronoUnit.YEARS);
+        System.out.println("下一年的时间: " + nextYear);//2022-12-02
+        LocalDate nextDecade = today.plus(1, ChronoUnit.DECADES);
+        System.out.println("10年后的时间: " + nextDecade);//2031-12-02
     }
 
     /**
