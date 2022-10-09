@@ -1,4 +1,4 @@
-package basics;
+package concurrent.api.basics;
 
 import org.junit.jupiter.api.Test;
 
