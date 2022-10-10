@@ -2,6 +2,7 @@ package com.example.concurrent.pattern;
 
 import com.example.concurrent.pattern.behavioral.observer.Sheep;
 import com.example.concurrent.pattern.behavioral.observer.Wolf;
+import com.example.concurrent.pattern.behavioral.responsibilitychain.*;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -26,5 +27,16 @@ public class PatternTest {
         wolf.addObserver(new Sheep("美羊羊"));
         wolf.addObserver(new Sheep("沸羊羊"));
         wolf.coming("hungry");
+    }
+
+    @Test
+    public void chainofResponsibilityTest01(){
+        Handler validateHandler = new ValidateHandler();
+        Handler loginHandler = new LoginHandler();
+        Handler authHandler = new AuthHandler();
+
+        validateHandler.next(loginHandler);
+        loginHandler.next(authHandler);
+        validateHandler.doHandler(new Member("loginName", "loginPass"));
     }
 }
