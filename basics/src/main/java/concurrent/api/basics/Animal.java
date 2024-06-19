@@ -1,11 +1,13 @@
 package concurrent.api.basics;
 
+import java.io.Serializable;
+
 /**
  * 测试类加载顺序
  * @date 2022-10-09
  * @author szf
  */
-public class Animal {
+public class Animal implements Serializable {
 
     static int HP = 1;
 
@@ -29,6 +31,29 @@ public class Animal {
     public Animal() {
         HP = addHP + HP;
         System.out.println("父类构造方法执行：addHP:"+ addHP + ";HP " + HP);     //  4. 父类构造方法执行：addHP:2;HP 4
+    }
+
+    public static int getHP() {
+        return HP;
+    }
+
+    public static void setHP(int HP) {
+        Animal.HP = HP;
+    }
+
+    public int getAddHP() {
+        return addHP;
+    }
+
+    public void setAddHP(int addHP) {
+        this.addHP = addHP;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "addHP=" + addHP +
+                '}';
     }
 }
 

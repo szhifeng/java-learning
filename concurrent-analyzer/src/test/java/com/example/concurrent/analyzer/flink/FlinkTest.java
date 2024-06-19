@@ -1,5 +1,6 @@
 package com.example.concurrent.analyzer.flink;
 
+import com.google.common.collect.Lists;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -7,7 +8,6 @@ import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class FlinkTest {
         env.setRuntimeMode(RuntimeExecutionMode.STREAMING);
         try {
             //数据源，fromCollection
-            env.fromCollection(Lists.list("nacos,python,java", "nacos,scripts,php", "nacos,java,springmvc", "nacos,sentinel,gateway"))
+            env.fromCollection(Lists.newArrayList("nacos,python,java", "nacos,scripts,php", "nacos,java,springmvc", "nacos,sentinel,gateway"))
                     //扁平化
                     .flatMap(new FlatMapFunction<String, String>() {
                         @Override
@@ -58,7 +58,7 @@ public class FlinkTest {
         env.setRuntimeMode(RuntimeExecutionMode.BATCH);
         try {
             //数据源，fromCollection
-            env.fromCollection(Lists.list("nacos,python,java", "nacos,scripts,php", "nacos,java,springmvc", "nacos,sentinel,gateway"))
+            env.fromCollection(Lists.newArrayList("nacos,python,java", "nacos,scripts,php", "nacos,java,springmvc", "nacos,sentinel,gateway"))
                     //扁平化
                     .flatMap(new FlatMapFunction<String, String>() {
                         @Override

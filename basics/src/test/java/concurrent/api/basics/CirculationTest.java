@@ -48,7 +48,7 @@ public class CirculationTest {
         });
     }
 
-    @Test
+//    @Test
     public void testFor(){
         for (;;) {
             System.out.println("测试和是否循环：");

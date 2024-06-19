@@ -8,8 +8,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-
 /**
  * @author szf
  * @describe: 初始化 netty 服务端
@@ -19,7 +17,6 @@ import javax.annotation.Resource;
 @Component
 public class NettyServiceCore {
 
-    @Resource
     private NettyTCPServer nettyTCPServer;
     @Value("${device.http.port}")
     private int httpPort;

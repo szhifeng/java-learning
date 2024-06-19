@@ -1,11 +1,18 @@
 package concurrent.api.basics;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import concurrent.api.basics.utils.Hessian2Derializer;
 import org.junit.jupiter.api.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalQuery;
+import java.util.Calendar;
+import java.util.Map;
 
 /**
  * @author szf
@@ -21,8 +28,12 @@ public class TimeTest {
      */
     @Test
     void instantTest() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Instant now = Instant.now();
+
         long milli = now.toEpochMilli();
+        System.out.println(now.toString());
+        System.out.println(now.atZone(ZoneOffset.ofHours(8)).format(formatter));
         System.out.println(milli);
         LocalDateTime time = LocalDateTime.ofInstant(now, ZoneOffset.ofHours(8));
         LocalDateTime time1 = LocalDateTime.ofInstant(Instant.ofEpochMilli(milli), ZoneOffset.ofHours(8));
@@ -106,6 +117,7 @@ public class TimeTest {
      */
     @Test
     void cronUnitTest() {
+        Calendar c = Calendar.getInstance();
         LocalDate today = LocalDate.now();
         System.out.println("当前时间: " + today); //2021-12-02
         //LocalDate plus(long amountToAdd, TemporalUnit unit)
@@ -133,4 +145,18 @@ public class TimeTest {
         };
         System.out.println("到年底还有多久:" + LocalDate.now().query(remainDaysOfYear));
     }
+
+    @Test
+    void hessianTest() {
+        Animal animal = new Animal();
+        animal.setAddHP(1);
+        String s = JSON.toJSONString(animal);
+        System.out.println(s);
+        Hessian2Derializer deserializer = new Hessian2Derializer();
+        Map<String, Object> a=JSON.parseObject(s.getBytes(StandardCharsets.UTF_8), new TypeReference<Map<String, Object>>() {}.getType());
+//        Map<String, Object> a = deserializer.derializer(, Map.class);
+        System.out.println("========"+a);
+    }
+
+
 }
