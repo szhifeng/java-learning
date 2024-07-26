@@ -1,8 +1,0 @@
-plugins {
-    id 'buildlogic.java-library-conventions'
-}
-
-dependencies {
-    implementation 'io.netty:netty-all:4.2.0.Alpha1'
-    api 'org.springframework.boot:spring-boot-starter:3.2.5'
-}

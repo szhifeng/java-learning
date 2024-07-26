@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id "java-library"
+}
+
+description = "basics network"
+
+dependencies {
+    api platform(project(':basics-learning:basics-dependencies'))
+    implementation 'org.snmp4j:snmp4j'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}

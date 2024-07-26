@@ -1,0 +1,36 @@
+
+description = "java learning Build"
+
+defaultTasks 'build'
+
+allprojects {
+	version = project.findProperty("projectVersion") ?: "0.1.0-SNAPSHOT"
+	repositories {
+		mavenCentral()
+	}
+}
+
+def versions = [:]
+new File(projectDir,"gradle.properties").withInputStream {
+	def properties = new Properties()
+	properties.load(it)
+	["assertj", "commonsCodec", "hamcrest","jackson", "springBoot", "junitJupiter", "kotlin", "maven"].each {
+		versions[it] = properties[it + "Version"]
+	}
+}
+ext.set("versions", versions)
+
+subprojects { subproject ->
+	if (subproject.plugins.hasPlugin('java')) {
+		subproject.sourceCompatibility = versions.java as Integer
+		subproject.targetCompatibility = versions.java as Integer
+
+		subproject.tasks.matching { it.name == 'test' }.configureEach {
+			useJUnitPlatform()
+		}
+		subproject.tasks.withType(JavaCompile).configureEach {
+			options.encoding = 'UTF-8'
+		}
+	}
+}
+

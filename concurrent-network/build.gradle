@@ -1,7 +1,0 @@
-plugins {
-    id 'buildlogic.java-library-conventions'
-}
-
-dependencies {
-    implementation 'org.snmp4j:snmp4j:2.8.4'
-}

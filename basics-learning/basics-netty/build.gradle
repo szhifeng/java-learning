@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id "java-library"
+}
+
+description = "basics netty"
+
+dependencies {
+    api platform(project(':basics-learning:basics-dependencies'))
+    implementation 'io.netty:netty-all'
+    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
