@@ -1,5 +1,34 @@
-rootProject.name = 'concurrent'
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "org.jetbrains.kotlin.jvm") {
+                useVersion "${kotlinVersion}"
+            }
+            if (requested.id.id == "org.jetbrains.kotlin.plugin.spring") {
+                useVersion "${kotlinVersion}"
+            }
+            if (requested.id.id == "org.springframework.boot") {
+                useVersion "${springBootVersion}"
+            }
+            if (requested.id.id == "io.spring.dependency-management") {
+                useVersion "${springDependencyManagementVersion}"
+            }
+        }
+    }
+}
 
-include 'concurrent-netty'
-include 'concurrent-api'
-include 'design-pattern'
+rootProject.name="java-learning-build"
+
+file("${rootDir}/basics-learning").eachDirMatch(~/basics.*/) {
+    include "basics-learning:${it.name}"
+}
+
+//include 'spring-boot-learning:spring-boot-test-dependencies' // 先显式地包含 spring-boot-test-dependencies
+file("${rootDir}/spring-boot-learning").eachDirMatch(~/spring-boot-test.*/) {
+    println(it.name)
+    include "spring-boot-learning:${it.name}"
+}

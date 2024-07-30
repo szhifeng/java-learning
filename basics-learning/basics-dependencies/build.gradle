@@ -1,0 +1,36 @@
+plugins {
+    id 'maven-publish' // 引入 java-platform插件
+    id 'java-platform' // 发布插件，可用来发布 BOM 或 jar到本地与远程仓库
+}
+
+description = "basics learning Dependencies"
+
+dependencies {
+    constraints {
+        //在constraints块中定义依赖版本约束
+        api("org.apache.commons:commons-text:1.11.0")
+        api("com.google.guava:guava:33.2.1-jre")
+        api("org.apache.commons:commons-lang3:3.9")
+        api("com.alibaba:fastjson:2.0.40")
+        api("com.caucho:hessian:4.0.51")
+        api("org.projectlombok:lombok:1.18.30")
+        api("org.projectlombok:lombok:1.18.30")
+        api("io.netty:netty-all:4.2.0.Alpha1")
+        api("org.springframework.boot:spring-boot-starter:${versions.springBoot}")
+        api("org.springframework.boot:spring-boot-starter-web:${versions.springBoot}")
+        api("org.snmp4j:snmp4j:2.8.4")
+        // ("e JUnit Jupiter for testing.
+        api("org.junit.jupiter:junit-jupiter:${versions.junitJupiter}")
+        api("org.junit.platform:junit-platform-launcher")
+    }
+}
+
+publishing{
+    publications{
+        //以下maven并非关键字，可自定义
+        maven(MavenPublication) {
+            //通过java-platform生成BOM
+            from components.javaPlatform
+        }
+    }
+}

@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'io.spring.dependency-management'
+}
+
+description = "spring boot test Dependencies"
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${versions.springBoot}"
+    }
+}
+
+dependencies {
+    constraints {
+        implementation("org.apache.commons:commons-text:1.11.0")
+        implementation("com.alibaba:fastjson:2.0.40")
+        implementation("org.springframework.boot:spring-boot-starter:${versions.springBoot}")
+        implementation("org.springframework.boot:spring-boot-starter-web:${versions.springBoot}")
+        implementation("org.junit.jupiter:junit-jupiter:${versions.junitJupiter}")
+        implementation("org.junit.platform:junit-platform-launcher")
+    }
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                packaging = 'pom'
+                name = project.name
+                description = "BOM for project dependencies"
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal() // 发布到本地 Maven 仓库
+    }
+}
+
+tasks.register('printPomLocation') {
+    doLast {
+        def mavenLocalRepo = "${System.getProperty("user.home")}/.m2/repository/com/example/${project.name}/${project.version}"
+        println "The generated POM is located at: ${mavenLocalRepo}"
+    }
+}

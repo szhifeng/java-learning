@@ -1,0 +1,38 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+    id "java-library"
+}
+
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.boot:spring-boot-dependencies:${version}"
+//    }
+//}
+
+dependencies {
+    api platform(project(':basics-learning:basics-dependencies'))
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+
+// 配置bootJar进行打包
+//bootJar {
+//    // jar包名称，默认是settings.gradle下的工程名 rootProject.name = 'alog-server'
+//    baseName = 'alog-server'
+//    // jar包版本号
+//    version =  '0.0.1'
+//    // 排除所有的jar
+//    excludes = ["*.jar"]
+//    // lib目录的清除和复制任务
+//    dependsOn copyJar
+//    // 配置目录的清除和复制任务
+//    dependsOn copyConfigFile
+//
+//    // 指定依赖包的路径
+//    manifest {
+//        attributes "Manifest-Version": 1.0,
+//                'Class-Path': configurations.compileClasspath.files.collect { "lib/$it.name" }.join(' ')
+//    }
+//}

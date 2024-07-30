@@ -1,0 +1,11 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+    id "java-library"
+}
+
+dependencies {
+    api platform(project(':basics-learning:basics-dependencies'))
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}

@@ -1,0 +1,26 @@
+plugins {
+    id "idea"
+    id 'java'
+    id "java-gradle-plugin"
+    id "checkstyle"
+}
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+configurations.all {
+    exclude group:"org.slf4j", module:"slf4j-api"
+    exclude group:"ch.qos.logback", module:"logback-classic"
+    exclude group:"ch.qos.logback", module:"logback-core"
+}
+
+gradlePlugin {
+    plugins {
+        customBuildPlugin {
+            id = "com.szf.example.custom-build"
+            implementationClass = "com.szf.example.CustomBuildPlugin"
+        }
+    }
+}

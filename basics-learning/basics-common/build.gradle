@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id "java-library"
+}
+description = "basics common"
+
+dependencies {
+    api platform(project(':basics-learning:basics-dependencies'))
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'com.caucho:hessian'
+    implementation 'com.alibaba:fastjson'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
