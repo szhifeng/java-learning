@@ -21,7 +21,7 @@ pluginManagement {
     }
 }
 
-rootProject.name="java-learning-build"
+rootProject.name="java-learning"
 
 file("${rootDir}/basics-learning").eachDirMatch(~/basics.*/) {
     include "basics-learning:${it.name}"
